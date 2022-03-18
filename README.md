@@ -1,6 +1,6 @@
 # This is the repo of Group meme Exercises 
 
-Our team member:
+Our team member:\n
 18812: Vu Hoang Tuan Anh (Team Leader)
 18810: Tran Kim Hoan
 17273: Truong Hoang Nam
