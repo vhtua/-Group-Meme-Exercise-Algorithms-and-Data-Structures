@@ -251,7 +251,7 @@ void printArray(int *arr, int size) {
 }
 
 int main() {
-    int size = 10;
+    int size = 30;
     int *arr = nullptr;
     RedBlackTree rbt;
 
@@ -275,5 +275,8 @@ int main() {
     delete[] arr;
 
     rbt.prettyPrint();
+
+    system("pause");
+
     return 0;
 }
