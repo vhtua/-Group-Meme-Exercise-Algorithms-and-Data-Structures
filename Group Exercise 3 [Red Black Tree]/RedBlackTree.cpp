@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <time.h>
 
 using namespace std;
 
@@ -232,16 +233,46 @@ public:
     }
 };
 
+int *randomArray(int size) {
+    srand(time(NULL));
+    int *arr = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        arr[i] = rand() % 100;
+    }
+
+    return arr;
+}
+
+void printArray(int *arr, int size) {
+    for (int i = 0; i < size; i++) {
+        cout << arr[i] << " ";
+    }
+}
+
 int main() {
+    int size = 10;
+    int *arr = nullptr;
     RedBlackTree rbt;
-    rbt.insertNode(8);
+
+    /*rbt.insertNode(8);
     rbt.insertNode(18);
     rbt.insertNode(5);
     rbt.insertNode(15);
     rbt.insertNode(17);
     rbt.insertNode(25);
     rbt.insertNode(40);
-    rbt.insertNode(80);
+    rbt.insertNode(80);*/
+
+    arr = randomArray(size);
+    printArray(arr, size);
+    cout << endl << endl;
+
+    for (int i = 0; i < size; i++) {
+        rbt.insertNode(arr[i]);
+    }
+
+    delete[] arr;
 
     rbt.prettyPrint();
     return 0;
