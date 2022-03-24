@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bits/stdc++.h>
+#include <string>
 
 using namespace std;
 
@@ -104,6 +105,24 @@ struct node *deleteNode(struct node *root, int key) {
     return root;
 }
 
+void printHelper(node *root, string indent, bool last) {
+    if (root != nullptr) {
+        cout << indent;
+        if (last) {
+            cout << "R----";
+            indent += "     ";
+        }
+        else {
+            cout << "L----";
+            indent += "|    ";
+        }
+
+        cout << root->key << endl;
+        printHelper(root->left, indent, false);
+        printHelper(root->right, indent, true);
+    }
+}
+
 
 // =================== MAIN FUNCTION =======================
 int main() {
@@ -121,8 +140,11 @@ int main() {
         root = insert(root, elements[i]);
     }
 
-    cout << "Inorder traversal of the given tree \n";
-    inorder(root);
+    // cout << "Inorder traversal of the given tree \n";
+    // inorder(root);
+
+    cout << "Tree visualizing:" << endl;
+    printHelper(root, "", true);
 
     // MENU
     int choice;
@@ -160,8 +182,9 @@ int main() {
 
         i_root = insert(root, insert_element);
 
-        cout << "\nInorder traversal of the modified tree \n";
-        inorder(i_root);
+        cout << "\nTree visualizing: \n";
+        printHelper(i_root, "", true);
+        //inorder(i_root);
 
     }
     else if (choice == 3) {
@@ -174,9 +197,13 @@ int main() {
         cout << "Delete " << del_element << endl;
         del_root = deleteNode(root, del_element);
 
-        cout << "\nInorder traversal of the modified tree \n";
-        inorder(del_root);
+        cout << "\nTree visualizing: \n";
+        //inorder(del_root);
+        printHelper(del_root, "", true);
+
     }
+
+    system("pause");
 
     return 0;
 }
