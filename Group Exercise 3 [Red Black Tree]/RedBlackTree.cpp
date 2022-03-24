@@ -1,6 +1,8 @@
 #include <iostream>
 #include <string>
 
+using namespace std;
+
 struct Node {
     int data;
     Node *parent;
@@ -24,6 +26,12 @@ private:
             y->left->parent = x;
         }
 
+        y->parent = x->parent;
+
+        if (x->parent == TNULL) {
+            this->root = y;
+        }
+
         else if (x == x->parent->left) {
             x->parent->left = y;
         }
@@ -45,7 +53,8 @@ private:
         }
 
         y->parent = x->parent;
-        if (x->parent == nullptr) {
+
+        if (x->parent == TNULL) {
             this->root = y;
         }
 
@@ -75,6 +84,81 @@ private:
         }
     }
 
+    void fixInsertNode(NodePtr node) {
+        NodePtr y;
+
+        while (node->parent->color == 1) {
+            if (node->parent == node->parent->parent->left) {
+                y = node->parent->parent->right;
+
+                if (y->color == 1) {
+                    y->color = 0;
+                    node->parent->color = 0;
+                    node->parent->parent->color = 1;
+                    node = node->parent->parent;
+                }
+
+                else {
+                    if (node == node->parent->right) {
+                        node = node->parent;
+                        leftRotate(node);
+                    }
+
+                    node->parent->color = 0;
+                    node->parent->parent->color = 1;
+                    rightRotate(node->parent->parent);
+                }
+            }
+
+            else {
+                y = node->parent->parent->left;
+
+                if (y->color == 1) {
+                    y->color = 0;
+                    node->parent->color = 0;
+                    node->parent->parent->color = 1;
+                    node = node->parent->parent;
+                }
+
+                else {
+                    if (node == node->parent->left) {
+                        node = node->parent;
+                        rightRotate(node);
+                    }
+
+                    node->parent->color = 0;
+                    node->parent->parent->color = 1;
+                    leftRotate(node->parent->parent);
+                }
+            }
+
+            if (node == this->root) {
+                break;
+            }
+        }
+
+        this->root->color = 0;
+    }
+
+    void printHelper(NodePtr root, string indent, bool last) {
+        if (root != TNULL) {
+            cout << indent;
+            if (last) {
+                cout << "R----";
+                indent += "     ";
+            }
+            else {
+                cout << "L----";
+                indent += "|    ";
+            }
+
+            string sColor = root->color ? "RED" : "BLACK";
+            cout << root->data << "(" << sColor << ")" << endl;
+            printHelper(root->left, indent, false);
+            printHelper(root->right, indent, true);
+        }
+    }
+
 public:
     RedBlackTree() {
         TNULL = new Node;
@@ -82,6 +166,83 @@ public:
         TNULL->left = nullptr;
         TNULL->right = nullptr;
         root = TNULL;
+    };
+
+    NodePtr searchTree(int key) {
+        return searchTreeHelper(this->root, key);
     }
 
+    void insertNode(int key) {
+        NodePtr node = new Node;
+        node->parent = nullptr;
+        node->data = key;
+        node->left = TNULL;
+        node->right = TNULL;
+        node->color = 1;
+
+        NodePtr x = this->root;
+        NodePtr y = TNULL;
+
+        while (x != TNULL) {
+            y = x;
+
+            if (node->data < x->data) {
+                x = x->left;
+            }
+
+            else {
+                x = x->right;
+            }
+        }
+
+        node->parent = y;
+
+        if (y == TNULL) {
+            this->root = node;
+        }
+
+        else if (node->data < y->data) {
+            y->left = node;
+        }
+
+        else {
+            y->right = node;
+        }
+
+        node->left = TNULL;
+        node->right = TNULL;
+        node->color = 1;
+
+        if (node->parent == TNULL) {
+            node->color = 0;
+            return;
+        }
+
+        if (node->parent->parent == TNULL) {
+            return;
+        }
+
+        fixInsertNode(node);
+    }
+
+    void prettyPrint() {
+        if (root) {
+            printHelper(this->root, "", true);
+        }
+    }
 };
+
+int main() {
+    RedBlackTree rbt;
+    rbt.insertNode(8);
+    rbt.insertNode(18);
+    rbt.insertNode(5);
+    rbt.insertNode(15);
+    rbt.insertNode(17);
+    rbt.insertNode(25);
+    rbt.insertNode(40);
+    rbt.insertNode(80);
+
+    rbt.prettyPrint();
+    return 0;
+}
