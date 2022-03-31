@@ -49,20 +49,23 @@ int minCoinChange(const int *supply, int distinctCoin, int value)
     int table[value + 1];
     table[0] = 0;
 
-    for (int i = 1; i <= value; i++)
+    for (int i = 1; i < value + 1; i++)
     {
         table[i] = INT_MAX;
     }
 
-    for (int i = 1; i <= value; i++)
+    for (int i = 1; i < value + 1; i++)
     {
         for (int j = 0; j < distinctCoin; j++)
         {
             if (supply[j] <= i)
             {
-                int currentCount = table[i - supply[j]];
+                int currentCount = table[i - supply[j]] + 1;
 
-                if (currentCount != INT_MAX && currentCount + 1 < table[i]) { table[i] = currentCount + 1; }
+                if (currentCount != INT_MAX && currentCount < table[i])
+                {
+                    table[i] = currentCount;
+                }
             }
         }
     }
