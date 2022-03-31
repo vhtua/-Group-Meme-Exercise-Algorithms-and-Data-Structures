@@ -5,53 +5,62 @@
 
 using namespace std;
 
-class HashTable {
-	private:
-		static const int hashGroups = 10;
-		std::list <pair<int, string>> table[hashGroups];	// create a list of pair (key, value)
+class HashTable
+{
+private:
+	static const int hashGroups = 10;
+	std::list <pair<int, string>> table[hashGroups];	// create a list of pair (key, value)
 
-	public:
-		bool isEmpty();
-		int hashFunction(int key);
-		void insertItem(int key, string value);
-		void removeItem(int key);
-		void printTable();
-		string searchTable(int key);
-		
+public:
+	bool isEmpty();
+	int hashFunction(int key);
+	void insertItem(int key, string value);
+	void removeItem(int key);
+	void printTable();
+	string searchTable(int key);
+
 };
 
-bool HashTable::isEmpty() {
+bool HashTable::isEmpty()
+{
 	int sum{};
-	for (int i{}; i < hashGroups; ++i) {
+	for (int i{}; i < hashGroups; ++i)
+	{
 		sum += table[i].size();
 	}
 
-	if(!sum) {
+	if (!sum)
+	{
 		return true;
 	}
 	return false;
 }
 
-int HashTable::hashFunction(int key) {
+int HashTable::hashFunction(int key)
+{
 	return key % hashGroups;
 }
 
-void HashTable::insertItem(int key, string value) {
+void HashTable::insertItem(int key, string value)
+{
 	int hashValue = hashFunction(key);
-	auto& cell = table[hashValue];
+	auto &cell = table[hashValue];
 	auto bItr = begin(cell);		// declare begining intergrator --> beginning of the list
 	bool keyExist = false;
 
-	for (; bItr != end(cell); bItr++) {
-		if (bItr -> first == key) {
+	for (; bItr != end(cell); bItr++)
+	{
+		if (bItr->first == key)
+		{
 			keyExist = true;
-			bItr -> second = value;
+			bItr->second = value;
 			cout << "Key exists! Value replaced." << endl;
 			break;
 		}
 	}
 
-	if(!keyExist) {
+	if (!keyExist)
+	{
 		cell.emplace_back(key, value); 	// insert when the key doesn't exist
 	}
 
@@ -59,14 +68,17 @@ void HashTable::insertItem(int key, string value) {
 
 }
 
-void HashTable::removeItem(int key) {
+void HashTable::removeItem(int key)
+{
 	int hashValue = hashFunction(key);
-	auto& cell = table[hashValue];
+	auto &cell = table[hashValue];
 	auto bItr = begin(cell);		// declare begining intergrator --> beginning of the list
 	bool keyExist = false;
 
-	for (; bItr != end(cell); bItr++) {
-		if (bItr -> first == key) {
+	for (; bItr != end(cell); bItr++)
+	{
+		if (bItr->first == key)
+		{
 			keyExist = true;
 			bItr = cell.erase(bItr);
 			cout << "Item removed." << endl;
@@ -74,7 +86,8 @@ void HashTable::removeItem(int key) {
 		}
 	}
 
-	if (!keyExist) {
+	if (!keyExist)
+	{
 		cout << "Key not found! Pair not remove." << endl;
 	}
 
@@ -82,13 +95,16 @@ void HashTable::removeItem(int key) {
 }
 
 
-void HashTable::printTable() {
-	for (int i{}; i < hashGroups; ++i) {
+void HashTable::printTable()
+{
+	for (int i{}; i < hashGroups; ++i)
+	{
 		if (table[i].size() == 0)
 			continue;
 		auto bItr = table[i].begin();
-		for (; bItr != table[i].end(); bItr++) {
-			cout << "Key: " << bItr -> first << ", Value: " << bItr -> second << endl;
+		for (; bItr != table[i].end(); bItr++)
+		{
+			cout << "Key: " << bItr->first << ", Value: " << bItr->second << endl;
 		}
 	}
 
@@ -99,13 +115,16 @@ void HashTable::printTable() {
 
 
 // =============== MAIN FUNCTION
-int main(void) {
+int main(void)
+{
 	HashTable HT;
 
-	if (HT.isEmpty()) {
+	if (HT.isEmpty())
+	{
 		cout << "[INFO] Empty Hash Table " << endl;
 	}
-	else {
+	else
+	{
 		cout << "Something wrong in declaration! Check again the Table!" << endl;
 	}
 
@@ -125,7 +144,8 @@ int main(void) {
 	HT.removeItem(14);
 	HT.removeItem(76);
 
-	if (HT.isEmpty()) {
+	if (HT.isEmpty())
+	{
 		cerr << "[ERROR] The Hash Table is empty" << endl;
 	}
 
