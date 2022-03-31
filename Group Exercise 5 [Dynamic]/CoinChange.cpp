@@ -1,45 +1,33 @@
 #include <iostream>
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 #include <string>
 
 using namespace std;
 
-// Count every possible way
-// int count(const int *supply, int distinctCoin, int value)
-// {
-//     if (value == 0) { return 1; }
-// 
-//     if (value < 0 || distinctCoin < 0) { return 0; }
-// 
-//     if (value > 0 && distinctCoin <= 0) { return 0; }
-// 
-//     return count(supply, distinctCoin, value - supply[distinctCoin - 1]) + count(supply, distinctCoin - 1, value);
-// }
+// Recursion Approach
+int minCoinChangeRec(const int *supply, int distinctCoin, int value)
+{
+    if (value == 0) { return 0; }
 
-// Recursion
-// int minCoinChange(const int *supply, int distinctCoin, int value)
-// {
-//     if (value == 0) { return 0; }
-// 
-//     int result = INT_MAX;
-// 
-//     for (int i = 0; i < distinctCoin; i++)
-//     {
-//         if (supply[i] <= value)
-//         {
-//             int temp = minCoinChange(supply, distinctCoin, value - supply[i]);
-// 
-//             if (temp != result && temp + 1 < result)
-//             {
-//                 result = temp + 1;
-//             }
-//         }
-//     }
-// 
-//     if (result == INT_MAX) { return -1; }
-// 
-//     else { return result; }
-// }
+    int result = INT_MAX;
+
+    for (int i = 0; i < distinctCoin; i++)
+    {
+        if (supply[i] <= value)
+        {
+            int temp = minCoinChangeRec(supply, distinctCoin, value - supply[i]) + 1;
+
+            if (temp != INT_MAX && temp < result)
+            {
+                result = temp;
+            }
+        }
+    }
+
+    if (result == INT_MAX) { return 0; }
+
+    else { return result; }
+}
 
 // DP Approach
 int minCoinChange(const int *supply, int distinctCoin, int value)
@@ -70,7 +58,15 @@ int minCoinChange(const int *supply, int distinctCoin, int value)
         }
     }
 
-    if (table[value] == INT_MAX) { return -1; }
+    for (int i = 0; i < value + 1; i++)
+    {
+        if (table[i] < 0)
+        {
+            table[i] = 0;
+        }
+    }
+
+    if (table[value] == INT_MAX) { return 0; }
     else { return table[value]; }
 }
 
