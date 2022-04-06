@@ -12,6 +12,7 @@ private:
     Node* prev;
 
     friend class DoublyLinkedList;
+    friend class HashTable;
 
 public:
     Node() : next(nullptr), prev(nullptr) {}
@@ -22,6 +23,7 @@ class DoublyLinkedList
 private:
     Node* head;
     Node* tail;
+    Node* searchNode(const string&);
 
     friend class HashTable;
 
@@ -32,7 +34,6 @@ public:
     void insertAfter(Node*, const string&);
     void append(const string&);
     void delNode(Node*);
-    Node* searchNode(const string&);
     void printNode();
 };
 
@@ -41,14 +42,14 @@ class HashTable
 private:
     int bucket;
     DoublyLinkedList** table;
+    int hashFunc(const string&);
 
 public:
     HashTable() {}
     HashTable(int);
     ~HashTable() {}
-    int hashFunc(const string&);
+    bool searchItem(const string&);
     void insItem(const string&);
-    void searchItem(const string&);
     void delItem(const string&);
 };
 
@@ -57,17 +58,13 @@ string getFirstName(const string&);
 
 int main()
 {
-    DoublyLinkedList* list = new DoublyLinkedList();
-    list->push("Josh Winston");
-    list->push("Dave Smith");
-    list->push("Jennifer Rockyou");
+    HashTable* table = new HashTable(30);
+    table->insItem("Josh Devia");
+    table->insItem("Jennifer Williams");
+    table->insItem("Dave Smith");
 
-    list->printNode();
-
-    Node* result = list->searchNode("Dave");
-    list->delNode(result);
-
-    list->printNode();
+    cout << table->searchItem("Dave Smith") << endl;
+    cout << table->searchItem("Dave Smith") << endl;
 
     cout << endl;
 
@@ -168,17 +165,24 @@ void DoublyLinkedList::delNode(Node* del)
     if (del->prev != nullptr) { del->prev->next = del->next; }
 
     delete del;
+    del = nullptr;
 }
 
 Node* DoublyLinkedList::searchNode(const string& key)
 {
     Node* temp = head;
 
-    while (temp->data != key && temp->next != nullptr) { temp = temp->next; }
+    while (temp != nullptr)
+    {
+        if (temp->data == key)
+        {
+            return temp;
+        }
 
-    if (temp->data != key) { return nullptr; }
+        temp = temp->next;
+    }
 
-    return temp;
+    return nullptr;
 }
 
 void DoublyLinkedList::printNode()
@@ -219,23 +223,34 @@ void HashTable::insItem(const string& key)
     table[index]->push(key);
 }
 
-void HashTable::searchItem(const string& key)
+bool HashTable::searchItem(const string& key)
 {
     int index = hashFunc(key);
+    Node* resNode = nullptr;
+    bool result = false;
     DoublyLinkedList* temp = table[index];
 
-    if (temp != nullptr)
+    if (temp != nullptr && temp->head != nullptr)
     {
-        while (temp != nullptr)
-        {
-            temp->head
-        }
+        resNode = temp->searchNode(key);
     }
+
+    if (resNode != nullptr) { result = true; }
+    else { result = false; }
+
+    delete temp;
+    delete resNode;
+    temp = nullptr;
+    resNode = nullptr;
+    return result;
 }
 
 void HashTable::delItem(const string& key)
 {
     int index = hashFunc(key);
     DoublyLinkedList* temp = table[index];
-
+    Node* tempNode = temp->searchNode(key);
+    temp->delNode(tempNode);
+    delete temp;
+    temp = nullptr;
 }
