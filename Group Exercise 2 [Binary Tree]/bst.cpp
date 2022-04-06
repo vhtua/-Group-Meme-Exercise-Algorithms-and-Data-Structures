@@ -4,31 +4,38 @@
 
 using namespace std;
 
-void rand_arr(int arr[], int length) {
+void rand_arr(int arr[], int length)
+{
     srand(time(NULL));
-    for (int i = 0; i < length; ++i) {
+    for (int i = 0; i < length; ++i)
+    {
         arr[i] = rand() % (100 + 1);          // return random natural numbers within [0, 100]
     }
 }
 
 
-struct node {
+struct node
+{
     int key;
-    struct node *left, *right;
+    struct node* left;
+    struct node* right;
 };
 
 
-struct node *newNode(int item) {
-    struct node *temp
-        = (struct node *)malloc(sizeof(struct node));
+struct node* newNode(int item)
+{
+    struct node* temp
+        = (struct node*)malloc(sizeof(struct node));
     temp->key = item;
     temp->left = temp->right = NULL;
     return temp;
 }
 
 
-void inorder(struct node *root) {
-    if (root != NULL) {
+void inorder(struct node* root)
+{
+    if (root != NULL)
+    {
         inorder(root->left);
         cout << root->key << " ";
         inorder(root->right);
@@ -36,7 +43,8 @@ void inorder(struct node *root) {
 }
 
 
-struct node *insert(struct node *node, int key) {
+struct node* insert(struct node* node, int key)
+{
     if (node == NULL)
         return newNode(key);
 
@@ -48,7 +56,8 @@ struct node *insert(struct node *node, int key) {
     return node;
 }
 
-struct node *search(struct node *root, int key) {
+struct node* search(struct node* root, int key)
+{
 
     if (root == NULL || root->key == key)
         return root;
@@ -60,8 +69,9 @@ struct node *search(struct node *root, int key) {
 }
 
 
-struct node *minValueNode(struct node *node) {
-    struct node *current = node;
+struct node* minValueNode(struct node* node)
+{
+    struct node* current = node;
 
     while (current && current->left != NULL)
         current = current->left;
@@ -70,7 +80,8 @@ struct node *minValueNode(struct node *node) {
 }
 
 
-struct node *deleteNode(struct node *root, int key) {
+struct node* deleteNode(struct node* root, int key)
+{
 
     if (root == NULL)
         return root;
@@ -81,22 +92,25 @@ struct node *deleteNode(struct node *root, int key) {
     else if (key > root->key)
         root->right = deleteNode(root->right, key);
 
-    else {
+    else
+    {
         if (root->left == NULL and root->right == NULL)
             return NULL;
 
-        else if (root->left == NULL) {
-            struct node *temp = root->right;
+        else if (root->left == NULL)
+        {
+            struct node* temp = root->right;
             free(root);
             return temp;
         }
-        else if (root->right == NULL) {
-            struct node *temp = root->left;
+        else if (root->right == NULL)
+        {
+            struct node* temp = root->left;
             free(root);
             return temp;
         }
 
-        struct node *temp = minValueNode(root->right);
+        struct node* temp = minValueNode(root->right);
 
         root->key = temp->key;
 
@@ -105,14 +119,18 @@ struct node *deleteNode(struct node *root, int key) {
     return root;
 }
 
-void printHelper(node *root, string indent, bool last) {
-    if (root != nullptr) {
+void printHelper(node* root, string indent, bool last)
+{
+    if (root != nullptr)
+    {
         cout << indent;
-        if (last) {
+        if (last)
+        {
             cout << "R----";
             indent += "     ";
         }
-        else {
+        else
+        {
             cout << "L----";
             indent += "|    ";
         }
@@ -125,8 +143,9 @@ void printHelper(node *root, string indent, bool last) {
 
 
 // =================== MAIN FUNCTION =======================
-int main() {
-    struct node *root = NULL;
+int main()
+{
+    struct node* root = NULL;
 
     // -----> uncomment to enable the random mode for the elements
     //int length = 30;
@@ -136,7 +155,8 @@ int main() {
     int elements[30] = { 114,85,135,198,61,12,82,190,144,129,3,84,129,117,32,194,40,53,29,52,58,92,58,10,117,72,116,107,192
     };
 
-    for (int i = 0; i < 30; ++i) {
+    for (int i = 0; i < 30; ++i)
+    {
         root = insert(root, elements[i]);
     }
 
@@ -148,7 +168,8 @@ int main() {
 
     // MENU
     int choice;
-    do {
+    do
+    {
         printf("\n\nEnter the number corresponding action you want to do with the binary search tree above\n");
         cout << "(1) Search a node" << endl << "(2) Insert a node" << endl << "(3) Delete a node" << endl;
         cout << "Your choice is (1, 2, 3)? : ";
@@ -160,8 +181,9 @@ int main() {
     } while (choice != 1 && choice != 2 && choice != 3);
 
 
-    if (choice == 1) {
-        struct node *search_res = NULL;
+    if (choice == 1)
+    {
+        struct node* search_res = NULL;
         int s_node;
 
         cout << "Enter the node you want to search: ";
@@ -173,8 +195,9 @@ int main() {
         else
             cout << "\n-->Can't find the node\n" << endl;
     }
-    else if (choice == 2) {
-        struct node *i_root = NULL;
+    else if (choice == 2)
+    {
+        struct node* i_root = NULL;
         int insert_element;
 
         cout << "Enter the node you want to insert: ";
@@ -187,8 +210,9 @@ int main() {
         //inorder(i_root);
 
     }
-    else if (choice == 3) {
-        struct node *del_root = NULL;
+    else if (choice == 3)
+    {
+        struct node* del_root = NULL;
         int del_element;
 
         cout << "Enter the node you want to delete: ";
