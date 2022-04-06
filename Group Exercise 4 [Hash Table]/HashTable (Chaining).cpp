@@ -59,15 +59,23 @@ string getFirstName(const string&);
 
 int main()
 {
-    HashTable* table = new HashTable(100);
+    HashTable* table = new HashTable(10);
     table->insertItem("Josh Devia");
     table->insertItem("Jennifer Williams");
     table->insertItem("Dave Smith");
 
+    cout << "Before delete: " << endl;
+
+    cout << table->searchItem("Josh Devia") << endl;
+    cout << table->searchItem("Jennifer Williams") << endl;
     cout << table->searchItem("Dave Smith") << endl;
 
     table->deleteItem("Dave Smith");
 
+    cout << endl << "After delete: " << endl;
+
+    cout << table->searchItem("Josh Devia") << endl;
+    cout << table->searchItem("Jennifer Williams") << endl;
     cout << table->searchItem("Dave Smith") << endl;
 
     cout << endl;
