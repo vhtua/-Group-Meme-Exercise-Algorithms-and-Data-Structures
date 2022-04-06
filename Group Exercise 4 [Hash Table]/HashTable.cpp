@@ -3,91 +3,155 @@
 
 using namespace std;
 
-struct Node
-{
-    string data;
-    Node *prev;
-    Node *next;
-};
-
-class LinkList
+class Node
 {
 private:
-    Node *head;
-    Node *tail;
+    string data;
+    Node* next;
+    Node* prev;
+
+    friend class DoublyLinkedList;
 
 public:
-    LinkList();
-    ~LinkList();
-    void push(string);
-    void insertAfter(Node *, string);
-    void append(string);
+    Node() : next(nullptr), prev(nullptr) {}
 };
 
-LinkList::LinkList()
+class DoublyLinkedList
 {
-    head->prev = nullptr;
-    head->next = nullptr;
-    tail->prev = nullptr;
-    tail->next = nullptr;
+private:
+    Node* head;
+    Node* tail;
+
+public:
+    DoublyLinkedList() : head(nullptr), tail(nullptr) {}
+    ~DoublyLinkedList() {}
+    void push(const string&);
+    void insertAfter(Node*, const string&);
+    void append(const string&);
+    void delNode(Node*);
+    Node* searchNode(const string&);
+    void printNode();
+};
+
+int main()
+{
+    DoublyLinkedList* list = new DoublyLinkedList();
+    list->push("Josh");
+    list->push("Dave");
+    list->push("Jennifer");
+
+    list->printNode();
+
+    Node* result = list->searchNode("Dave");
+    list->delNode(result);
+
+    list->printNode();
+
+    system("pause");
+    return 0;
 }
 
-LinkList::~LinkList() {}
-
-void LinkList::push(string value)
+void DoublyLinkedList::push(const string& value)
 {
+    Node* node = new Node();
+
     if (head == nullptr)
     {
+        head = node;
+        tail = node;
         head->data = value;
         tail->data = value;
         return;
     }
 
-    Node *newNode = new Node;
-
-    newNode->data = value;
-    newNode->prev = nullptr;
-    newNode->next = head;
-    head->prev = newNode;
-    head = newNode;
+    node->data = value;
+    node->prev = nullptr;
+    node->next = head;
+    head->prev = node;
+    head = node;
 }
 
-void LinkList::insertAfter(Node *prevNode, string value)
+void DoublyLinkedList::insertAfter(Node* prevNode, const string& value)
 {
+    Node* node = new Node();
+
     if (prevNode == nullptr)
     {
+        head = node;
+        tail = node;
         head->data = value;
         tail->data = value;
         return;
     }
 
-    Node *newNode = new Node;
+    node->data = value;
+    node->prev = prevNode;
+    node->next = prevNode->next;
+    prevNode->next = node;
 
-    newNode->data = value;
-    newNode->prev = prevNode;
-    newNode->next = prevNode->next;
-    prevNode->next = newNode;
-
-    if (newNode->next != nullptr)
+    if (node->next != nullptr)
     {
-        newNode->next->prev = newNode;
+        node->next->prev = node;
     }
 }
 
-void LinkList::append(string value)
+void DoublyLinkedList::append(const string& value)
 {
+    Node* node = new Node();
+
     if (tail == nullptr)
     {
+        head = node;
+        tail = node;
         head->data = value;
         tail->data = value;
         return;
     }
 
-    Node *newNode = new Node;
+    node->data = value;
+    node->prev = tail;
+    node->next = nullptr;
+    tail->next = node;
+    tail = node;
+}
 
-    newNode->data = value;
-    newNode->prev = tail;
-    newNode->next = nullptr;
-    tail->next = newNode;
-    tail = newNode;
+void DoublyLinkedList::delNode(Node* del)
+{
+    if (head == nullptr || del == nullptr) { return; }
+
+    if (head == del) { head = del->next; }
+
+    if (del->next != nullptr) { del->next->prev = del->prev; }
+
+    if (del->prev != nullptr) { del->prev->next = del->next; }
+
+    delete del;
+}
+
+Node* DoublyLinkedList::searchNode(const string& key)
+{
+    Node* temp = head;
+
+    while (temp->data != key && temp->next != nullptr) { temp = temp->next; }
+
+    if (temp->data != key) { return nullptr; }
+
+    return temp;
+}
+
+void DoublyLinkedList::printNode()
+{
+    while (head->prev != nullptr) { head = head->prev; }
+
+    Node* temp = head;
+
+    while (tail->next != nullptr) { tail = tail->next; }
+
+    while (temp != tail)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+
+    cout << temp->data << endl;
 }

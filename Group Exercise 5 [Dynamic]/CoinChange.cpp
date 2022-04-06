@@ -5,7 +5,7 @@
 using namespace std;
 
 // Recursion Approach
-int minCoinChangeRec(const int *supply, int distinctCoin, int value)
+int minCoinChangeRec(const int* supply, int distinctCoin, int value)
 {
     if (value == 0) { return 0; }
 
@@ -30,7 +30,7 @@ int minCoinChangeRec(const int *supply, int distinctCoin, int value)
 }
 
 // DP Approach
-int minCoinChange(const int *supply, int distinctCoin, int value)
+int minCoinChange(const int* supply, int distinctCoin, int value)
 {
     if (value == 0) { return 0; }
 
