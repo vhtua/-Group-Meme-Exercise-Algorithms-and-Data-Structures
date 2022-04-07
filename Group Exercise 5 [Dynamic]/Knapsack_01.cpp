@@ -34,7 +34,7 @@ int Knapsack_DP(int weight[], int value[], int items, int total_Weight) {
         Knapsack_table[i][0] = 0;
     }
 
-    for (int j = 0; j < total_Weight; ++j) {
+    for (int j = 0; j <= total_Weight; ++j) {
         if (weight[0] <= j) {
             Knapsack_table[0][j] = value[0];
         }
@@ -45,18 +45,24 @@ int Knapsack_DP(int weight[], int value[], int items, int total_Weight) {
 
     for (int i = 1; i < items; ++i) {
         for (int j = 1; j <= total_Weight; ++j) {
-            if (j >= weight[i] && Knapsack_table[i - 1][j - weight[i]] + value[i] > Knapsack_table[i - 1][j])
+            if (j >= weight[i] && Knapsack_table[i - 1][j - weight[i]] + value[i] > Knapsack_table[i - 1][j]) {
+                Knapsack_table[i][j] =  Knapsack_table[i - 1][j - weight[i]] + value[i];
+            }
+            else {
+                Knapsack_table[i][j] = Knapsack_table[i - 1][j];
+            }
         }
     }
 
 
-    return 1;
+    return Knapsack_table[items - 1][total_Weight - 1];
 }
 
 
 // Main function
 int main() {
-    cout << Knapsack(items, total_Weight);
+    cout << Knapsack(items, total_Weight) << endl;
+    cout << Knapsack_DP(weight, value, items, total_Weight);
 
 
 
