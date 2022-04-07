@@ -8,6 +8,7 @@ class HashNode
 {
 private:
     string data;
+    string phone;
 
     friend class HashTable;
 
@@ -28,9 +29,10 @@ public:
     HashTable() {}
     HashTable(const int&);
     ~HashTable() {}
-    void insertItem(const string&);
+    void insertItem(const string&, const string&);
     bool searchItem(const string&);
     void deleteItem(const string&);
+    void printNode(const string&);
 };
 
 int convertASCII(const string&);
@@ -40,9 +42,12 @@ int main()
 {
     HashTable* table = new HashTable(10);
 
-    table->insertItem("Josh William");
-    table->insertItem("Jennifer White");
-    table->insertItem("Dave Smith");
+    table->insertItem("Josh William", "384-182-4845");
+    table->insertItem("Jennifer White", "394-596-3925");
+    table->insertItem("Dave Smith", "912-395-3901");
+    table->insertItem("Dave Smith", "234-463-5903");
+    table->insertItem("Dave Smith", "748-484-8640");
+
 
     cout << "Before delete: " << endl;
 
@@ -59,6 +64,9 @@ int main()
     cout << table->searchItem("Josh William") << endl;
     cout << table->searchItem("Jennifer White") << endl;
     cout << table->searchItem("Dave Smith") << endl;
+
+    table->printNode("Dave Smith");
+    cout << endl;
 
     system("pause");
     return 0;
@@ -98,7 +106,7 @@ int HashTable::hashFunc(const string& key)
     return convertASCII(getFirstName(key)) % this->tableSize;
 }
 
-void HashTable::insertItem(const string& key)
+void HashTable::insertItem(const string& key, const string& phone)
 {
     int index = hashFunc(key);
     int temp = index;
@@ -109,6 +117,7 @@ void HashTable::insertItem(const string& key)
         {
             table[index] = new HashNode();
             table[index]->data = key;
+            table[index]->phone = phone;
             return;
         }
 
@@ -125,6 +134,7 @@ void HashTable::insertItem(const string& key)
             {
                 table[index] = new HashNode();
                 table[index]->data = key;
+                table[index]->phone = phone;
                 return;
             }
 
@@ -199,4 +209,36 @@ void HashTable::deleteItem(const string& key)
             index++;
         }
     }
+}
+
+void HashTable::printNode(const string& key)
+{
+    int index = hashFunc(key);
+    int temp = index;
+
+    while (index < this->tableSize)
+    {
+        if (table[index] != nullptr && table[index]->data == key)
+        {
+            cout << table[index]->data << ' ' << table[index]->phone << " ----> ";
+        }
+
+        index++;
+    }
+
+    if (index == this->tableSize)
+    {
+        index = 0;
+
+        while (index < temp)
+        {
+            if (table[index] != nullptr && table[index]->data == key)
+            {
+                cout << table[index]->data << ' ' << table[index]->phone << " ----> ";
+            }
+
+            index++;
+        }
+    }
+
 }

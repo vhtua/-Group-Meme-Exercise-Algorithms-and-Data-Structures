@@ -8,6 +8,7 @@ class Node
 {
 private:
     string data;
+    string phone;
     Node* next;
     Node* prev;
 
@@ -31,11 +32,11 @@ private:
 public:
     DoublyLinkedList() : head(nullptr), tail(nullptr) {}
     ~DoublyLinkedList() {}
-    void push(const string&);
-    void insertAfter(Node*, const string&);
-    void append(const string&);
+    void push(const string&, const string&);
+    void insertAfter(Node*, const string&, const string&);
+    void append(const string&, const string&);
     void delNode(Node*);
-    void printNode();
+    void printList();
 };
 
 class HashTable
@@ -50,8 +51,9 @@ public:
     HashTable(int);
     ~HashTable() {}
     bool searchItem(const string&);
-    void insertItem(const string&);
+    void insertItem(const string&, const string&);
     void deleteItem(const string&);
+    void printTable();
 };
 
 int convertASCII(const string&);
@@ -60,23 +62,19 @@ string getFirstName(const string&);
 int main()
 {
     HashTable* table = new HashTable(10);
-    table->insertItem("Josh Devia");
-    table->insertItem("Jennifer Williams");
-    table->insertItem("Dave Smith");
+    table->insertItem("Josh Devia", "454-596-0954");
+    table->insertItem("Jennifer Williams", "495-596-1238");
+    table->insertItem("Dave Smith", "845-292-5839");
 
     cout << "Before delete: " << endl;
 
-    cout << table->searchItem("Josh Devia") << endl;
-    cout << table->searchItem("Jennifer Williams") << endl;
-    cout << table->searchItem("Dave Smith") << endl;
+    table->printTable();
 
-    table->deleteItem("Dave Smith");
+    table->deleteItem("Jennifer Williams");
 
     cout << endl << "After delete: " << endl;
 
-    cout << table->searchItem("Josh Devia") << endl;
-    cout << table->searchItem("Jennifer Williams") << endl;
-    cout << table->searchItem("Dave Smith") << endl;
+    table->printTable();
 
     cout << endl;
 
@@ -102,7 +100,7 @@ string getFirstName(const string& name)
     return name.substr(0, pos);
 }
 
-void DoublyLinkedList::push(const string& value)
+void DoublyLinkedList::push(const string& value, const string& phone)
 {
     Node* node = new Node();
 
@@ -111,18 +109,21 @@ void DoublyLinkedList::push(const string& value)
         head = node;
         tail = node;
         head->data = value;
+        head->phone = phone;
         tail->data = value;
+        tail->phone = phone;
         return;
     }
 
     node->data = value;
+    node->phone = phone;
     node->prev = nullptr;
     node->next = head;
     head->prev = node;
     head = node;
 }
 
-void DoublyLinkedList::insertAfter(Node* prevNode, const string& value)
+void DoublyLinkedList::insertAfter(Node* prevNode, const string& value, const string& phone)
 {
     Node* node = new Node();
 
@@ -131,11 +132,14 @@ void DoublyLinkedList::insertAfter(Node* prevNode, const string& value)
         head = node;
         tail = node;
         head->data = value;
+        head->phone = phone;
         tail->data = value;
+        tail->phone = phone;
         return;
     }
 
     node->data = value;
+    node->phone = phone;
     node->prev = prevNode;
     node->next = prevNode->next;
     prevNode->next = node;
@@ -146,7 +150,7 @@ void DoublyLinkedList::insertAfter(Node* prevNode, const string& value)
     }
 }
 
-void DoublyLinkedList::append(const string& value)
+void DoublyLinkedList::append(const string& value, const string& phone)
 {
     Node* node = new Node();
 
@@ -155,11 +159,14 @@ void DoublyLinkedList::append(const string& value)
         head = node;
         tail = node;
         head->data = value;
+        head->phone = phone;
         tail->data = value;
+        tail->phone = phone;
         return;
     }
 
     node->data = value;
+    node->phone = phone;
     node->prev = tail;
     node->next = nullptr;
     tail->next = node;
@@ -171,6 +178,8 @@ void DoublyLinkedList::delNode(Node* del)
     if (head == nullptr || del == nullptr) { return; }
 
     if (head == del) { head = del->next; }
+
+    if (tail == del) { tail = del->prev; }
 
     if (del->next != nullptr) { del->next->prev = del->prev; }
 
@@ -200,7 +209,7 @@ Node* DoublyLinkedList::searchNode(const string& key)
     return nullptr;
 }
 
-void DoublyLinkedList::printNode()
+void DoublyLinkedList::printList()
 {
     while (head->prev != nullptr) { head = head->prev; }
 
@@ -210,11 +219,11 @@ void DoublyLinkedList::printNode()
 
     while (temp != tail)
     {
-        cout << temp->data << " ";
+        cout << temp->data << " " << temp->phone << " ----> ";
         temp = temp->next;
     }
 
-    cout << temp->data << endl;
+    cout << temp->data << " " << temp->phone;
 }
 
 HashTable::HashTable(int size)
@@ -223,7 +232,7 @@ HashTable::HashTable(int size)
     table = new DoublyLinkedList * [bucket];
     for (int i = 0; i < bucket; i++)
     {
-        table[i] = new DoublyLinkedList();
+        table[i] = nullptr;
     }
 }
 
@@ -232,10 +241,16 @@ int HashTable::hashFunc(const string& key)
     return convertASCII(getFirstName(key)) % this->bucket;
 }
 
-void HashTable::insertItem(const string& key)
+void HashTable::insertItem(const string& key, const string& phone)
 {
     int index = hashFunc(key);
-    table[index]->push(key);
+
+    if (table[index] == nullptr)
+    {
+        table[index] = new DoublyLinkedList();
+    }
+
+    table[index]->push(key, phone);
 }
 
 bool HashTable::searchItem(const string& key)
@@ -272,5 +287,30 @@ void HashTable::deleteItem(const string& key)
     {
         Node* tempNode = temp->searchNode(key);
         temp->delNode(tempNode);
+
+        if (temp->head == nullptr && temp->tail == nullptr)
+        {
+            delete temp;
+            table[index] = nullptr;
+        }
+    }
+}
+
+void HashTable::printTable()
+{
+    for (int i = 0; i < this->bucket; i++)
+    {
+        if (table[i] != nullptr)
+        {
+            cout << i << ". ";
+            table[i]->printList();
+            cout << endl;
+        }
+
+        else
+        {
+            cout << i << ". NULL";
+            cout << endl;
+        }
     }
 }
