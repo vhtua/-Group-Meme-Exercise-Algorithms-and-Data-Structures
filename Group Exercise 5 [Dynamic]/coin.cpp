@@ -2,15 +2,16 @@
 
 using namespace std;
 
-bool min(int a, int b) {
-    return (a < b)? a : b;
-}
-
 int coinChange(int coinNumber, int totalValue, const int* dCoin) {
-    int mainTable[coinNumber][totalValue + 1];
+    int** mainTable = new int*[coinNumber];
+    for(int i = 0; i < coinNumber; ++i) {
+        mainTable[i] = new int[totalValue + 1];
+    }
+
     for(int i = 0; i < coinNumber; ++i) {
         mainTable[i][0] = 0;
     }
+
     for(int i = 0; i < coinNumber; ++i) {
         int currentCoin = dCoin[i];
         for(int j = 1; j < totalValue + 1; ++j) {
@@ -23,7 +24,14 @@ int coinChange(int coinNumber, int totalValue, const int* dCoin) {
             }
         }
     }
-    return mainTable[coinNumber - 1][totalValue];
+    int result = mainTable[coinNumber - 1][totalValue];
+    
+    for(int i = 0; i < coinNumber; ++i) {
+        delete[] mainTable[i];
+    }
+    delete[] mainTable;
+    
+    return result;
 }
 
 int main() {
