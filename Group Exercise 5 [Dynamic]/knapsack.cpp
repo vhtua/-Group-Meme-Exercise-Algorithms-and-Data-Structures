@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int knapsack(int numberOfBag, int totalWeight, int* weightList, int* valueList, int* optimalKnapsack) {
+int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int* valueList, int* optimalKnapsack) {
     // initialize main table
     int** mainTable = new int*[numberOfBag];
     for(int i = 0; i < numberOfBag; ++i) {
