@@ -32,7 +32,7 @@ public:
     void insertItem(const string&, const string&);
     bool searchItem(const string&);
     void deleteItem(const string&);
-    void printNode(const string&);
+    void printTable();
 };
 
 int convertASCII(const string&);
@@ -45,27 +45,11 @@ int main()
     table->insertItem("Josh William", "384-182-4845");
     table->insertItem("Jennifer White", "394-596-3925");
     table->insertItem("Dave Smith", "912-395-3901");
-    table->insertItem("Dave Smith", "234-463-5903");
-    table->insertItem("Dave Smith", "748-484-8640");
+    table->insertItem("Dave White", "234-463-5903");
+    table->insertItem("Dave Jackson", "748-484-8640");
+    table->insertItem("Jennifer Collins", "394-596-3925");
 
-
-    cout << "Before delete: " << endl;
-
-    cout << table->searchItem("Josh William") << endl;
-    cout << table->searchItem("Jennifer White") << endl;
-    cout << table->searchItem("Dave Smith") << endl;
-
-    table->deleteItem("Jennifer White");
-
-    cout << endl;
-
-    cout << "After delete: " << endl;
-
-    cout << table->searchItem("Josh William") << endl;
-    cout << table->searchItem("Jennifer White") << endl;
-    cout << table->searchItem("Dave Smith") << endl;
-
-    table->printNode("Dave Smith");
+    table->printTable();
     cout << endl;
 
     system("pause");
@@ -211,34 +195,20 @@ void HashTable::deleteItem(const string& key)
     }
 }
 
-void HashTable::printNode(const string& key)
+void HashTable::printTable()
 {
-    int index = hashFunc(key);
-    int temp = index;
-
-    while (index < this->tableSize)
+    for (int i = 0; i < this->tableSize; i++)
     {
-        if (table[index] != nullptr && table[index]->data == key)
+        cout << i << ". ";
+
+        if (table[i] != nullptr)
         {
-            cout << table[index]->data << ' ' << table[index]->phone << " ----> ";
+            cout << table[i]->data << " " << table[i]->phone << endl;
         }
 
-        index++;
-    }
-
-    if (index == this->tableSize)
-    {
-        index = 0;
-
-        while (index < temp)
+        else
         {
-            if (table[index] != nullptr && table[index]->data == key)
-            {
-                cout << table[index]->data << ' ' << table[index]->phone << " ----> ";
-            }
-
-            index++;
+            cout << "NULL" << endl;
         }
     }
-
 }

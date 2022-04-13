@@ -219,11 +219,11 @@ void DoublyLinkedList::printList()
 
     while (temp != tail)
     {
-        cout << temp->data << " " << temp->phone << " ----> ";
+        cout << "Name: " << temp->data << ", phone: " << temp->phone << " ----> ";
         temp = temp->next;
     }
 
-    cout << temp->data << " " << temp->phone;
+    cout << "Name: " << temp->data << ", phone number: " << temp->phone;
 }
 
 HashTable::HashTable(int size)
