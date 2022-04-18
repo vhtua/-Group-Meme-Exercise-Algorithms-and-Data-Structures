@@ -28,13 +28,19 @@ int** shortest_path(int **matrix, int numberOfnode) {
 		}
 	}
 
+	// for debug --> cout << "Running SP?\n";
+
 	// execution the alg
 	for (int k = 0; k < numberOfnode; ++k) {
+		//--> for debug cout << "Running loop k?";
 		for (int i = 0; i < numberOfnode; ++i) {
 			for (int j = 0; j < numberOfnode; ++j) {
 				if (matrix[i][k] + matrix[k][j] < matrix[i][j]) {
+					// for debug --> cout << "< yes?" << endl;
 					matrix[i][j] = matrix[i][k] + matrix[k][j];
 					result[i][j] = k;
+					cout << "Debug --> shortest:\n";
+					cout << k << " ";
 				}
 			}
 		}
@@ -103,6 +109,12 @@ int main() {
 		shortest[i] = new int [numberOfnode];
 	}
 
+	for (int i = 0; i < numberOfnode; ++i) {
+		for (int j = 0; j < numberOfnode; ++j) {
+			shortest[i][j] = 0;
+		}
+	}
+
 	shortest = shortest_path(matrix, numberOfnode);
 	showMatrix(shortest, numberOfnode);
 	
@@ -120,7 +132,7 @@ int main() {
 
 
 // sample input
-/*
+/* inputf.in
 
 4
 0 5 20 10
