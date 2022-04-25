@@ -49,10 +49,14 @@ int main()
     table->insertItem("Dave Jackson", "748-484-8640");
     table->insertItem("Jennifer Collins", "394-596-3925");
 
+    table->deleteItem("Dave Jackson");
+    table->deleteItem("Dave White");
+    table->deleteItem("Dave Smith");
+    table->deleteItem("Jennifer Collins");
+
     table->printTable();
     cout << endl;
 
-    system("pause");
     return 0;
 }
 
@@ -95,34 +99,35 @@ void HashTable::insertItem(const string& key, const string& phone)
     int index = hashFunc(key);
     int temp = index;
 
-    while (index < this->tableSize)
+    while (temp < this->tableSize)
     {
-        if (table[index] == nullptr)
+        if (table[temp] == nullptr)
         {
-            table[index] = new HashNode();
-            table[index]->data = key;
-            table[index]->phone = phone;
+            table[temp] = new HashNode();
+            table[temp]->data = key;
+            table[temp]->phone = phone;
             return;
         }
 
-        index++;
+        temp++;
     }
 
-    if (index == this->tableSize)
-    {
-        index = 0;
 
-        while (index < temp)
+    if (temp == this->tableSize)
+    {
+        temp = 0;
+
+        while (temp < index)
         {
-            if (table[index] == nullptr)
+            if (table[temp] == nullptr)
             {
-                table[index] = new HashNode();
-                table[index]->data = key;
-                table[index]->phone = phone;
+                table[temp] = new HashNode();
+                table[temp]->data = key;
+                table[temp]->phone = phone;
                 return;
             }
 
-            index++;
+            temp++;
         }
     }
 }
@@ -132,28 +137,28 @@ bool HashTable::searchItem(const string& key)
     int index = hashFunc(key);
     int temp = index;
 
-    while (index < this->tableSize)
+    while (temp < this->tableSize)
     {
-        if (table[index] != nullptr && table[index]->data == key)
+        if (table[temp] != nullptr && table[temp]->data == key)
         {
             return true;
         }
 
-        index++;
+        temp++;
     }
 
-    if (index == this->tableSize)
+    if (temp == this->tableSize)
     {
-        index = 0;
+        temp = 0;
 
-        while (index < temp)
+        while (temp < index)
         {
-            if (table[index] != nullptr && table[index]->data == key)
+            if (table[temp] != nullptr && table[temp]->data == key)
             {
                 return true;
             }
 
-            index++;
+            temp++;
         }
     }
 
@@ -165,33 +170,30 @@ void HashTable::deleteItem(const string& key)
     int index = hashFunc(key);
     int temp = index;
 
-    while (index < this->tableSize)
+    while (temp < this->tableSize)
     {
-        if (table[index]->data == key)
+        if (table[temp] != nullptr && table[temp]->data == key)
         {
-            delete table[index];
-            table[index] = nullptr;
+            delete table[temp];
+            table[temp] = nullptr;
             return;
         }
 
-        index++;
+        temp++;
     }
 
-    if (index == this->tableSize)
+    temp = 0;
+
+    while (temp < index)
     {
-        index = 0;
-
-        while (index < temp)
+        if (table[temp] != nullptr && table[temp]->data == key)
         {
-            if (table[index]->data == key)
-            {
-                delete table[index];
-                table[index] = nullptr;
-                return;
-            }
-
-            index++;
+            delete table[temp];
+            table[temp] = nullptr;
+            return;
         }
+
+        temp++;
     }
 }
 
