@@ -8,11 +8,11 @@ void printTable(int r, int c, int w)
 
     for (int i = 0; i < r; ++i)
     {
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
             std::cout << "+";
 
-            for (int j = 0; j < w; ++j)
+            for (int k = 0; k < w; ++k)
             {
                 std::cout << "-";
             }
@@ -20,20 +20,20 @@ void printTable(int r, int c, int w)
 
         std::cout << "+" << std::endl;
 
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
             std::cin >> s;
             space = (w - s.size()) / 2;
             std::cout << "|";
 
-            for (int j = 0; j < space; ++j)
+            for (int k = 0; k < space; ++k)
             {
                 std::cout << " ";
             }
 
             std::cout << s;
 
-            for (int j = 0; j < w - (int)s.size() - space; ++j)
+            for (int k = 0; k < w - (int)s.size() - space; ++k)
             {
                 std::cout << " ";
             }
@@ -42,7 +42,7 @@ void printTable(int r, int c, int w)
         std::cout << "|" << std::endl;
     }
 
-    for (int k = 0; k < c; ++k)
+    for (int i = 0; i < c; ++i)
     {
         std::cout << "+";
 
@@ -62,11 +62,11 @@ void printTable(std::string* array, int r, int c, int w)
 
     for (int i = 0; i < r; ++i)
     {
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
             std::cout << "+";
 
-            for (int j = 0; j < w; ++j)
+            for (int k = 0; k < w; ++k)
             {
                 std::cout << "-";
             }
@@ -74,20 +74,20 @@ void printTable(std::string* array, int r, int c, int w)
 
         std::cout << "+" << std::endl;
 
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
-            temp = array[i * c + k];
+            temp = array[i * c + j];
             space = (w - temp.size()) / 2;
             std::cout << "|";
 
-            for (int j = 0; j < space; ++j)
+            for (int k = 0; k < space; ++k)
             {
                 std::cout << " ";
             }
 
             std::cout << temp;
 
-            for (int j = 0; j < w - space - (int)temp.size(); ++j)
+            for (int k = 0; k < w - space - (int)temp.size(); ++k)
             {
                 std::cout << " ";
             }
@@ -97,7 +97,7 @@ void printTable(std::string* array, int r, int c, int w)
 
     }
 
-    for (int k = 0; k < c; ++k)
+    for (int i = 0; i < c; ++i)
     {
         std::cout << "+";
 
@@ -117,11 +117,11 @@ void printTable(std::string** array, int r, int c, int w)
 
     for (int i = 0; i < r; ++i)
     {
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
             std::cout << "+";
 
-            for (int j = 0; j < w; ++j)
+            for (int k = 0; k < w; ++k)
             {
                 std::cout << "-";
             }
@@ -129,20 +129,20 @@ void printTable(std::string** array, int r, int c, int w)
 
         std::cout << "+" << std::endl;
 
-        for (int k = 0; k < c; ++k)
+        for (int j = 0; j < c; ++j)
         {
-            temp = array[i][k];
+            temp = array[i][j];
             space = (w - temp.size()) / 2;
             std::cout << "|";
 
-            for (int j = 0; j < space; ++j)
+            for (int k = 0; k < space; ++k)
             {
                 std::cout << " ";
             }
 
             std::cout << temp;
 
-            for (int j = 0; j < w - space - (int)temp.size(); ++j)
+            for (int k = 0; k < w - space - (int)temp.size(); ++k)
             {
                 std::cout << " ";
             }
@@ -152,7 +152,7 @@ void printTable(std::string** array, int r, int c, int w)
 
     }
 
-    for (int k = 0; k < c; ++k)
+    for (int i = 0; i < c; ++i)
     {
         std::cout << "+";
 
