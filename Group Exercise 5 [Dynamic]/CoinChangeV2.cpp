@@ -1,5 +1,6 @@
 #include <iostream>
 #include <bits/stdc++.h>
+#include <iomanip>
 
 using namespace std;
 
@@ -14,8 +15,8 @@ void coinChange(int* coinSupply, int arraySize, int value)
         while (coinSupply[i] <= temp)
         {
             temp = temp - coinSupply[i];
-            count[i]++;
-            min++;
+            ++count[i];
+            ++min;
         }
     }
 
@@ -24,17 +25,21 @@ void coinChange(int* coinSupply, int arraySize, int value)
 
     for (int i = 0; i < arraySize; i++)
     {
-        cout << count[i] << " ---> " << coinSupply[i] << " cent coin(s)" << endl;
+        cout << left << setw(5) << count[i] << setw(10) << "---->" << setw(5) << coinSupply[i] << " cent coin(s)" << endl;
     }
 }
 
 int main()
 {
-    int coinSupply[] = { 1, 10, 20, 25, 50, 100 };
+    int coinSupply[6];
+
+    for (int i = 0; i < 6; ++i)
+    {
+        cin >> coinSupply[i];
+    }
     int arraySize = sizeof(coinSupply) / sizeof(coinSupply[0]);
 
     coinChange(coinSupply, arraySize, 276);
 
-    system("pause");
     return 0;
 }
