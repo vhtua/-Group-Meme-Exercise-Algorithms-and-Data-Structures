@@ -80,11 +80,20 @@ void printTable(int* array, int r, int c, int w)
         for (int j = 0; j < c; ++j)
         {
             temp = array[i * c + j];
-            space = floor((w - 1 - floor(log10(abs(temp)))) / 2);
 
             if (temp < 0)
             {
                 space = floor((w - 2 - floor(log10(abs(temp)))) / 2);
+            }
+
+            else if (temp == 0)
+            {
+                space = floor((w - 1) / 2);
+            }
+
+            else
+            {
+                space = floor((w - 1 - floor(log10(temp))) / 2);
             }
 
             std::cout << "|";
@@ -96,10 +105,17 @@ void printTable(int* array, int r, int c, int w)
 
             std::cout << temp;
 
-            if (temp >= 0)
+            if (temp < 0)
             {
+                for (int k = 0; k < w - 2 - space - (int)floor(log10(abs(temp))); ++k)
+                {
+                    std::cout << " ";
+                }
+            }
 
-                for (int k = 0; k < w - 1 - space - (int)floor(log10(abs(temp))); ++k)
+            else if (temp == 0)
+            {
+                for (int k = 0; k < w - 1 - space; ++k)
                 {
                     std::cout << " ";
                 }
@@ -107,7 +123,7 @@ void printTable(int* array, int r, int c, int w)
 
             else
             {
-                for (int k = 0; k < w - 2 - space - (int)floor(log10(abs(temp))); ++k)
+                for (int k = 0; k < w - 1 - space - (int)floor(log10(temp)); ++k)
                 {
                     std::cout << " ";
                 }
@@ -152,11 +168,20 @@ void printTable(int** array, int r, int c, int w)
         for (int j = 0; j < c; ++j)
         {
             temp = array[i][j];
-            space = floor((w - 1 - floor(log10(abs(temp)))) / 2);
 
             if (temp < 0)
             {
                 space = floor((w - 2 - floor(log10(abs(temp)))) / 2);
+            }
+
+            else if (temp == 0)
+            {
+                space = floor((w - 1) / 2);
+            }
+
+            else
+            {
+                space = floor((w - 1 - floor(log10(temp))) / 2);
             }
 
             std::cout << "|";
@@ -168,10 +193,17 @@ void printTable(int** array, int r, int c, int w)
 
             std::cout << temp;
 
-            if (temp >= 0)
+            if (temp < 0)
             {
+                for (int k = 0; k < w - 2 - space - (int)floor(log10(abs(temp))); ++k)
+                {
+                    std::cout << " ";
+                }
+            }
 
-                for (int k = 0; k < w - 1 - space - (int)floor(log10(abs(temp))); ++k)
+            else if (temp == 0)
+            {
+                for (int k = 0; k < w - 1 - space; ++k)
                 {
                     std::cout << " ";
                 }
@@ -179,7 +211,7 @@ void printTable(int** array, int r, int c, int w)
 
             else
             {
-                for (int k = 0; k < w - 2 - space - (int)floor(log10(abs(temp))); ++k)
+                for (int k = 0; k < w - 1 - space - (int)floor(log10(temp)); ++k)
                 {
                     std::cout << " ";
                 }
