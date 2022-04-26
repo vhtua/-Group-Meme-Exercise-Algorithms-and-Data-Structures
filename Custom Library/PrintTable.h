@@ -83,17 +83,17 @@ void printTable(int* array, int r, int c, int w)
 
             if (temp < 0)
             {
-                space = floor((w - 2 - floor(log10(abs(temp)))) / 2);
+                space = floor((w - 1 - floor(log10(abs(temp)))) / 2);
             }
 
             else if (temp == 0)
             {
-                space = floor((w - 1) / 2);
+                space = floor(w / 2);
             }
 
             else
             {
-                space = floor((w - 1 - floor(log10(temp))) / 2);
+                space = floor((w - floor(log10(temp))) / 2);
             }
 
             std::cout << "|";
@@ -171,17 +171,17 @@ void printTable(int** array, int r, int c, int w)
 
             if (temp < 0)
             {
-                space = floor((w - 2 - floor(log10(abs(temp)))) / 2);
+                space = floor((w - 1 - floor(log10(abs(temp)))) / 2);
             }
 
             else if (temp == 0)
             {
-                space = floor((w - 1) / 2);
+                space = floor(w / 2);
             }
 
             else
             {
-                space = floor((w - 1 - floor(log10(temp))) / 2);
+                space = floor((w - floor(log10(temp))) / 2);
             }
 
             std::cout << "|";
