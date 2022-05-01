@@ -3,7 +3,7 @@
 #include <unordered_set>
 #include <set>
 
-void removeValue(int*& arr, int n, int val)
+int removeValue(int*& arr, int n, int val)
 {
     int temp[n] = { 0 };
     int size = 0;
@@ -25,9 +25,11 @@ void removeValue(int*& arr, int n, int val)
     {
         arr[i] = temp[i];
     }
+
+    return size;
 }
 
-void removeDuplicate(int*& arr, int n)
+int removeDuplicate(int*& arr, int n)
 {
     std::set<int> temp;
 
@@ -49,6 +51,8 @@ void removeDuplicate(int*& arr, int n)
         arr[index] = *iter;
         ++index;
     }
+
+    return (int)temp.size();
 }
 
 int countDistinct(int*& arr, int n)
