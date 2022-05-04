@@ -3,9 +3,10 @@
 #include <unordered_set>
 #include <set>
 
-int removeValue(int*& arr, int n, int val)
+template <typename T>
+int removeValue(T*& arr, int n, T val)
 {
-    int temp[n] = { 0 };
+    T temp[n] = { 0 };
     int size = 0;
 
     for (int i = 0; i < n; ++i)
@@ -19,7 +20,7 @@ int removeValue(int*& arr, int n, int val)
 
     delete[] arr;
 
-    arr = new int[size]();
+    arr = new T[size]();
 
     for (int i = 0; i < size; ++i)
     {
@@ -29,9 +30,10 @@ int removeValue(int*& arr, int n, int val)
     return size;
 }
 
-int removeDuplicate(int*& arr, int n)
+template<typename T>
+int removeDuplicate(T*& arr, int n)
 {
-    std::set<int> temp;
+    std::set<T> temp;
 
     for (int i = 0; i < n; ++i)
     {
@@ -40,9 +42,9 @@ int removeDuplicate(int*& arr, int n)
 
     delete[] arr;
 
-    arr = new int[temp.size()];
+    arr = new T[temp.size()];
 
-    std::set<int>::iterator iter;
+    typename std::set<T>::iterator iter;
 
     int index = 0;
 
@@ -55,9 +57,10 @@ int removeDuplicate(int*& arr, int n)
     return (int)temp.size();
 }
 
-int countDistinct(int*& arr, int n)
+template<typename T>
+int countDistinct(T*& arr, int n)
 {
-    std::unordered_set<int> temp;
+    std::unordered_set<T> temp;
 
     int count = 0;
 
