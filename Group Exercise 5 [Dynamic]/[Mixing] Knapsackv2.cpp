@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <iomanip>
 
 using namespace std;
 
@@ -32,20 +33,34 @@ int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int*
             }
         }
     }
+
+    // -->debug
+    cout << setw(4);
+    for (int i = 0; i < numberOfBag; ++i) {
+        for (int j = 0; j < totalWeight + 1; ++j) {
+            cout << mainTable[i][j] << " " << setw(4) ; 
+        }
+        cout << endl;
+    }
     
     // backtracking for finding optimal knapsack
+    vector<int> selection1;
     int knapsackChecker = mainTable[numberOfBag - 1][totalWeight];
     int i = numberOfBag - 1; // 5
     int j = totalWeight; // 10
-    while(i != 0) {
+    //int actualWeight = 
+    while(i != 0 && j > 0) {
         if(knapsackChecker != mainTable[i - 1][j]) {
             knapsackChecker = mainTable[i - 1][j - weightList[i]];
+            j = j - weightList[i];
             optimalKnapsack[i] = 1;
+            //optimalKnapsack[i] = 1;
         } else {
             knapsackChecker = mainTable[i - 1][j];
         }
         i--;
     }
+    
     if(knapsackChecker != 0) {
         optimalKnapsack[0] = 1;
     }
@@ -187,10 +202,10 @@ int main() {
     cout << "==========[start]==========" << endl;
 
     // input
-    int numberOfBag = 6;
+    int numberOfBag = 7;
     int totalWeight = 10;
-    int weightList[numberOfBag] = {3, 2, 6, 1, 7, 4};
-    int valueList[numberOfBag] = {7, 10, 2, 3, 2, 6};
+    int weightList[numberOfBag] = {3, 2, 6, 1, 7, 4, 8};
+    int valueList[numberOfBag] = {7, 10, 2, 3, 2, 6, 100};
     int optimalKnapsack[numberOfBag];
     for(int i = 0; i < numberOfBag; ++i) {
         optimalKnapsack[i] = 0;
