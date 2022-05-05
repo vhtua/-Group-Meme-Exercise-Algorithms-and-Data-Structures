@@ -48,7 +48,7 @@ int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int*
     int knapsackChecker = mainTable[numberOfBag - 1][totalWeight];
     int i = numberOfBag - 1; // 5
     int j = totalWeight; // 10
-    //int actualWeight = 
+    //int actualWeight
     while(i != 0 && j > 0) {
         if(knapsackChecker != mainTable[i - 1][j]) {
             knapsackChecker = mainTable[i - 1][j - weightList[i]];
@@ -183,19 +183,6 @@ int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int*
 
     return result;
 }
-/*
-void print_table(int** arr_2d, int rows) {
-    cout << "\n---> Transition Table:" << endl;
-    printf("+---------+-------+-------+\n");
-    printf("| States  |   a   |   b   |\n");
-    printf("+---------+-------+-------+\n");
-
-    for (int i = 0; i < rows; ++i) {
-        printf("| q%-6d |  q%-4d|  q%-4d|\n", i, arr_2d[i][0], arr_2d[i][1]); 
-    }
-    printf("+---------+-------+-------+\n");
-}
-*/
 
 // ============== Main function ================
 int main() {
