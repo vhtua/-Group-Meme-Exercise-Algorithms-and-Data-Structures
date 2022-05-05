@@ -6,14 +6,17 @@
 template <typename T>
 int removeValue(T*& arr, int n, T val)
 {
-    T temp[n] = { 0 };
+    T temp[n];
     int size = 0;
+
+    int index = 0;
 
     for (int i = 0; i < n; ++i)
     {
         if (arr[i] != val)
         {
-            temp[i] = arr[i];
+            temp[index] = arr[i];
+            ++index;
             ++size;
         }
     }
