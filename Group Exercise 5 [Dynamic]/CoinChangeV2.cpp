@@ -1,7 +1,4 @@
-#include <iostream>
 #include <bits/stdc++.h>
-#include <iomanip>
-#include <PrintTable.h>
 
 using namespace std;
 
@@ -9,7 +6,7 @@ void coinChange(int* coinSupply, int arraySize, int value)
 {
     int temp = value;
     int count[arraySize] = { 0 };
-    int min = 0;
+   int min = 0;
 
     for (int i = arraySize - 1; i >= 0; --i)
     {
@@ -36,7 +33,7 @@ int main()
 
     int arraySize = sizeof(coinSupply) / sizeof(coinSupply[0]);
 
-    coinChange(coinSupply, arraySize, 281);
+    coinChange(coinSupply, arraySize, 276);
 
     return 0;
 }
