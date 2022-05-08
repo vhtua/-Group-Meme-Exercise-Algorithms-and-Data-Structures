@@ -34,21 +34,13 @@ int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int*
         }
     }
 
-    // -->debug
-    cout << setw(4);
-    for (int i = 0; i < numberOfBag; ++i) {
-        for (int j = 0; j < totalWeight + 1; ++j) {
-            cout << mainTable[i][j] << " " << setw(4) ; 
-        }
-        cout << endl;
-    }
     
     // backtracking for finding optimal knapsack
     vector<int> selection1;
     int knapsackChecker = mainTable[numberOfBag - 1][totalWeight];
     int i = numberOfBag - 1; // 5
     int j = totalWeight; // 10
-    //int actualWeight
+    //int actualWeight 
     while(i != 0 && j > 0) {
         if(knapsackChecker != mainTable[i - 1][j]) {
             knapsackChecker = mainTable[i - 1][j - weightList[i]];
@@ -174,6 +166,19 @@ int knapsack(int numberOfBag, int totalWeight, const int* weightList, const int*
 
     printf("\n\n");
 
+
+    // -->debug
+    /* uncomment to show the table of DP algorithms
+    cout << setw(4);
+    for (int i = 0; i < numberOfBag; ++i) {
+        for (int j = 0; j < totalWeight + 1; ++j) {
+            cout << mainTable[i][j] << " " << setw(4) ; 
+        }
+        cout << endl;
+    }
+    printf("\n\n"); 
+    */
+
     // delete main table
     int result = mainTable[numberOfBag - 1][totalWeight];
     for(int i = 0; i < numberOfBag; ++i) {
@@ -205,7 +210,7 @@ int main() {
 
 
     // output
-    cout << "The result is: " << result << endl;
+    cout << "The result (Possible Max value) is: " << result << endl;
     cout << "Optimal knapsack --> item# : ";
     for(int i = 0; i < numberOfBag; ++i) {
         if(optimalKnapsack[i] == 1) {
