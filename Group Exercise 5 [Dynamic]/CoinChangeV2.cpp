@@ -1,42 +1,58 @@
-#include <iostream>
+#define INF numeric_limits<int>::max()
+
 #include <bits/stdc++.h>
-#include <iomanip>
-#include <PrintTable.h>
 
 using namespace std;
 
 void coinChange(int* coinSupply, int arraySize, int value)
 {
-    int temp = value;
-    int count[arraySize] = { 0 };
-    int min = 0;
+    int M[value + 1];
+    M[0] = 0;
 
-    for (int i = arraySize - 1; i >= 0; --i)
+    int S[value + 1];
+    S[0] = 0;
+
+    int count[arraySize] = { 0 };
+
+    int i, j;
+    for (i = 1; i <= value; ++i)
     {
-        while (coinSupply[i] <= temp)
+        int min = INF;
+        int coin = 0;
+
+        for (j = 1; j <= arraySize; ++j)
         {
-            temp = temp - coinSupply[i];
-            ++count[i];
-            ++min;
+            if (i >= coinSupply[j])
+            {
+                if ((1 + M[i - coinSupply[j]]) < min)
+                {
+                    min = 1 + M[i - coinSupply[j]];
+                    coin = j;
+                }
+            }
         }
+
+        M[i] = min;
+        S[i] = coin;
     }
 
-    cout << "The minimum number of coin(s): " << min << endl;
+    cout << "Minimum coin(s): " << M[value] << endl;
     cout << "We need: " << endl;
 
-    for (int i = 0; i < arraySize; i++)
+    int temp = value;
+
+    while (temp > 0)
     {
-        cout << left << setw(5) << count[i] << setw(10) << "---->" << setw(5) << coinSupply[i] << " cent coin(s)" << endl;
+        printf("%d\n", coinSupply[S[temp]]);
+        temp = temp - coinSupply[S[temp]];
     }
 }
 
 int main()
 {
-    int coinSupply[6] = { 1, 10, 20, 25, 50, 100 };
+    int coinSupply[] = { 0, 1, 10, 20, 25, 50, 100 };
 
-    int arraySize = sizeof(coinSupply) / sizeof(coinSupply[0]);
-
-    coinChange(coinSupply, arraySize, 281);
+    coinChange(coinSupply, 6, 290);
 
     return 0;
 }
