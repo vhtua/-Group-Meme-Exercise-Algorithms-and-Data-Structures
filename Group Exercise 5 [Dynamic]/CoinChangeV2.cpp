@@ -12,8 +12,6 @@ void coinChange(int* coinSupply, int arraySize, int value)
     int S[value + 1];
     S[0] = 0;
 
-    int count[arraySize] = { 0 };
-
     int i, j;
     for (i = 1; i <= value; ++i)
     {
@@ -52,7 +50,7 @@ int main()
 {
     int coinSupply[] = { 0, 1, 10, 20, 25, 50, 100 };
 
-    coinChange(coinSupply, 6, 290);
+    coinChange(coinSupply, 6, 482);
 
     return 0;
 }
