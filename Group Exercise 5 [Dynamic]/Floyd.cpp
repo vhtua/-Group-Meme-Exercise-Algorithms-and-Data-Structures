@@ -29,17 +29,6 @@ void floyd(int** graph, int v)
 		}
 	}
 
-	//for (int k = 0; k < v; ++k)
-	//{
-	//	for (int i = 0; i < v; ++i)
-	//	{
-	//		for (int j = 0; j < v; ++j)
-	//		{
-	//			result[i][j] = min(result[i][j], result[i][k] + result[k][j]);
-	//		}
-	//	}
-	//}
-
 	for (int k = 0; k < v; ++k)
 	{
 		for (int i = 0; i < v; ++i)
