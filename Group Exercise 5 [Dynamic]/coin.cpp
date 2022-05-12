@@ -28,14 +28,29 @@ int coinChange(int coinNumber, int totalValue, const int* dCoin, int* optimalCoi
         }
     }
 
+    /*
+    for(int i = 0; i < coinNumber; ++i) {
+        for(int j = 0; j < totalValue + 1; ++j) {
+            cout << mainTable[i][j] << '\t';
+        }
+        cout << endl;
+    }
+    cout << endl;
+    */
+
     // backtracking for optimal coin
     int coinChecker = mainTable[coinNumber - 1][totalValue];
     int counter = coinChecker;
     int i = coinNumber - 1;
     int j = totalValue;
     while(counter != 0) {
+        if(j == 1) {
+            optimalCoin[0]++;
+            break;
+        }
         if(coinChecker == mainTable[i - 1][j]) {
             i--;
+            coinChecker = mainTable[i][j];
         }
         if(coinChecker == mainTable[i][j - dCoin[i]] + 1) {
             coinChecker = mainTable[i][j - dCoin[i]];
@@ -62,7 +77,13 @@ int main() {
     int coinNumber = 6;
     int totalValue = 276;
     int dCoin[coinNumber] = {1, 10, 20, 25, 50, 100};
-    int optimalCoin[coinNumber];
+    /*
+    for (int i = 0; i < coinNumber; ++i)
+    {
+        cin >> dCoin[i];
+    }
+    */
+    int* optimalCoin = new int[coinNumber];
     for(int i = 0; i < coinNumber; ++i) {
         optimalCoin[i] = 0;
     }
@@ -78,6 +99,9 @@ int main() {
             cout << '\t' <<  optimalCoin[i] << " coin(s) of value " << dCoin[i] << endl;
         }
     }
+
+    // delete optimalCoin[]
+    delete[] optimalCoin;
 
     cout << "===========[end]===========" << endl;
     return 0;
