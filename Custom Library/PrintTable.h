@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
+#include <vector>
 
 void printTable(int r, int c, int w)
 {
@@ -329,6 +330,94 @@ void printTable(std::string** array, int r, int c, int w)
 
         std::cout << "|" << std::endl;
 
+    }
+
+    for (int i = 0; i < c; ++i)
+    {
+        std::cout << "+";
+
+        for (int j = 0; j < w; ++j)
+        {
+            std::cout << "-";
+        }
+    }
+
+    std::cout << "+" << std::endl;
+}
+
+void printTable(std::vector<std::vector<int>> vec, int r, int c, int w)
+{
+    int temp;
+    int space;
+
+    for (int i = 0; i < r; ++i)
+    {
+        for (int j = 0; j < c; ++j)
+        {
+            std::cout << "+";
+
+            for (int k = 0; k < w; ++k)
+            {
+                std::cout << "-";
+            }
+        }
+
+        std::cout << "+" << std::endl;
+
+        for (int j = 0; j < c; ++j)
+        {
+            temp = vec[i][j];
+
+            if (temp < 0)
+            {
+                space = floor((w - 1 - floor(log10(abs(temp)))) / 2);
+            }
+
+            else if (temp == 0)
+            {
+                space = floor(w / 2);
+            }
+
+            else
+            {
+                space = floor((w - floor(log10(temp))) / 2);
+            }
+
+            std::cout << "|";
+
+            for (int k = 0; k < space; ++k)
+            {
+                std::cout << " ";
+            }
+
+            std::cout << temp;
+
+            if (temp < 0)
+            {
+                for (int k = 0; k < w - 2 - space - (int)floor(log10(abs(temp))); ++k)
+                {
+                    std::cout << " ";
+                }
+            }
+
+            else if (temp == 0)
+            {
+                for (int k = 0; k < w - 1 - space; ++k)
+                {
+                    std::cout << " ";
+                }
+            }
+
+            else
+            {
+                for (int k = 0; k < w - 1 - space - (int)floor(log10(temp)); ++k)
+                {
+                    std::cout << " ";
+                }
+            }
+        }
+
+        std::cout << "|" << std::endl;
     }
 
     for (int i = 0; i < c; ++i)

@@ -1,9 +1,8 @@
-#define INF 999999
-
 #include <iostream>
-#include <limits>
 #include <algorithm>
 #include <PrintTable.h>
+
+#define INF 999999
 
 using namespace std;
 
